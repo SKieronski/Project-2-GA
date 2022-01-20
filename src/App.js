@@ -1,9 +1,17 @@
 import React, { useEffect, useState } from 'react';
 import './App.css';
+import SearchForm from './components/SearchForm';
 
 const App = () => {
   //Our event data will use hooks to update without page refreshes
   const [eventData, setEventData] = useState(null);
+  
+  // Form search string, default is set to Chicago
+  const [searchString, setSearchString] = useState("Chicago");
+
+  const handleSubmit = (event) => {
+    event.preventDefault();
+  }
 
   //query options needed to fetch event data
   const queryOptions = {
@@ -28,7 +36,9 @@ const App = () => {
   console.log(eventData);
   return (
     <div className="App">
-      
+      <header className="App-header">
+        <SearchForm />
+      </header>
     </div>
   );
 }
