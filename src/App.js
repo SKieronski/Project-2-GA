@@ -21,7 +21,7 @@ const App = () => {
   }
   //Fetch the event info
   const getEventInfo = () => {
-    fetch(`https://api.seatgeek.com/2/events?client_id=${queryOptions.client_id}&client_secret=${queryOptions.client_secret}`)
+    fetch(`https://api.seatgeek.com/2/events?venue.city=Chicago&taxonomies.name=concert&client_id=${queryOptions.client_id}&client_secret=${queryOptions.client_secret}`)
     .then(response => {
       return response.json();
     })
