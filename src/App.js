@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import './App.css';
 import SearchForm from './components/SearchForm';
+import SearchResults from './components/SearchResults';
 
 const App = () => {
   //Our event data will use hooks to update without page refreshes
@@ -39,6 +40,7 @@ const App = () => {
       <header className="App-header">
         <SearchForm />
       </header>
+      <SearchResults eventData={eventData} />
     </div>
   );
 }
