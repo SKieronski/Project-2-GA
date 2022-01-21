@@ -3,7 +3,7 @@ import React from "react";
 const SearchResults = ({eventData}) => {
     if(eventData) {
         const myResults = eventData.events;
-        console.log(myResults)
+        
         return (
             <div className="Div-results">
                 {myResults.map((event) => {
@@ -20,9 +20,7 @@ const SearchResults = ({eventData}) => {
                                 <li className="Li-venue" key={event.venue.slug}>{event.venue.name} in {event.venue.display_location}</li>
                                 <li className="Li-avgPrice" key={event.stats.average_price}>Avg Price: ${event.stats.average_price}</li>
                             </ul>
-
                         </div>
-                        
                     )
                 })}
             </div>
