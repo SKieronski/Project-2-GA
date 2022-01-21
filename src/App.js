@@ -9,13 +9,14 @@ const App = () => {
   
   //Init Form state
   const initFormState = {
-    queryType: "",
+    queryType: "performer",
     searchString: "",
   }
   
   // Form state
-  const [formState, setFormState] = useState("Chicago");
+  const [formState, setFormState] = useState(initFormState);
 
+  //function for handling form submit
   const handleSubmit = (event) => {
     event.preventDefault();
 
@@ -24,12 +25,17 @@ const App = () => {
     setFormState(initFormState);
   }
 
+  //function for handling form change
+  const handleChange = (event) => {
+    setFormState({...formState, [event.target.id]: event.target.value});
+  }
+
   //query options needed to fetch event data
   const queryOptions = {
     client_id : process.env.REACT_APP_SEATGEEK_CLIENT_ID,
     client_secret : process.env.REACT_APP_SEATGEEK_CLIENT_SECRET,
   }
-  
+
   //Fetch the event info
   const getEventInfo = () => {
     fetch(`https://api.seatgeek.com/2/events?venue.city=Chicago&taxonomies.name=concert&client_id=${queryOptions.client_id}&client_secret=${queryOptions.client_secret}`)
@@ -49,7 +55,7 @@ const App = () => {
   return (
     <div className="App">
       <header className="App-header">
-        <SearchForm handleSubmit={handleSubmit} />
+        <SearchForm handleSubmit={handleSubmit} handleChange={handleChange} formState={formState}/>
       </header>
       <SearchResults eventData={eventData} />
     </div>

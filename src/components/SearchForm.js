@@ -1,11 +1,11 @@
 import React from "react";
 
-const SearchForm = ({handleSubmit}) => {
+const SearchForm = ({handleSubmit, handleChange, formState}) => {
 
     return(
         <form className="Form-search" onSubmit={handleSubmit}>
             <label htmlFor="queryType">Search By:</label>
-            <select className="Form-select" id="queryType">
+            <select className="Form-select" id="queryType" onChange={handleChange} value={formState.queryType}>
                 <option value="performer">Performer</option>
                 <option value="city">City</option>
             </select>
@@ -13,6 +13,8 @@ const SearchForm = ({handleSubmit}) => {
             <input 
                 type="search"
                 id="searchString"
+                onChange={handleChange}
+                value={formState.searchString}
                 required
             />
             <button type="submit">Submit</button>
