@@ -1,5 +1,6 @@
 import React from "react";
 import Map from "./Map";
+import AudioPlayer from "./AudioPlayer";
 
 const SearchResults = ({eventData, lastForm, queryOptions}) => {
     if(eventData) {
@@ -12,8 +13,10 @@ const SearchResults = ({eventData, lastForm, queryOptions}) => {
         return (
             <div className="Div-results">
                 {myResults.map((event) => {
+                    console.log(event);
                     const venueCity = event.venue.city;
                     const venueName = event.venue.name;
+                    const venueDate = event.datetime_local.split("T", 1)
                     return (
                         <div className="inDIVidual-results" key={event.id}>
                             <img className="Img-results" src={event.performers[0].image} alt={event.performers[0].name}/>
@@ -23,10 +26,13 @@ const SearchResults = ({eventData, lastForm, queryOptions}) => {
                                 <li className="Li-genre" key={event.performers[0].genres[0].id}>{event.performers[0].genres[0].name}</li>}
 
                                 <li className="Li-venue" key={event.venue.slug}>{event.venue.name} in {event.venue.display_location}</li>
+                                
+                                <li className="Li-date" key={event.created_at}>{venueDate}</li>
 
                                 {event.stats.average_price && <li className="Li-avgPrice" key={event.stats.average_price}>Avg Price: ${event.stats.average_price}</li>}
                             </ul>
                             <Map queryOptions={queryOptions} venueName={venueName} venueCity = {venueCity} />
+                            <AudioPlayer />
                         </div>
                     )
                 })}
