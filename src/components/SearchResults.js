@@ -1,25 +1,32 @@
 import React from "react";
+import Map from "./Map";
 
-const SearchResults = ({eventData}) => {
+const SearchResults = ({eventData, lastForm, queryOptions}) => {
     if(eventData) {
         const myResults = eventData.events;
-        
+        if(myResults.length < 1) {
+            return (
+                <h1>No upcoming events for "{lastForm.searchString}"</h1>
+            )
+        }
         return (
             <div className="Div-results">
                 {myResults.map((event) => {
+                    const venueCity = event.venue.city;
+                    const venueName = event.venue.name;
                     return (
-                        <div className="inDIVidual-results" key={event.title}>
+                        <div className="inDIVidual-results" key={event.id}>
                             <img className="Img-results" src={event.performers[0].image} alt={event.performers[0].name}/>
                             <h2 className="H2-results">{event.title}</h2>
                             <ul className="Ul-genre">
-                                {event.performers[0].genres && event.performers[0].genres.map((genre) => {
-                                    return (
-                                        <li className="Li-genre" key={genre.id}>{genre.name}</li>
-                                    )
-                                })}
+                                {event.performers[0].genres && 
+                                <li className="Li-genre" key={event.performers[0].genres[0].id}>{event.performers[0].genres[0].name}</li>}
+
                                 <li className="Li-venue" key={event.venue.slug}>{event.venue.name} in {event.venue.display_location}</li>
-                                <li className="Li-avgPrice" key={event.stats.average_price}>Avg Price: ${event.stats.average_price}</li>
+
+                                {event.stats.average_price && <li className="Li-avgPrice" key={event.stats.average_price}>Avg Price: ${event.stats.average_price}</li>}
                             </ul>
+                            <Map queryOptions={queryOptions} venueName={venueName} venueCity = {venueCity} />
                         </div>
                     )
                 })}

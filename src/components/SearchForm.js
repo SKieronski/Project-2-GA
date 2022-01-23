@@ -6,8 +6,10 @@ const SearchForm = ({handleSubmit, handleChange, formState}) => {
         <form className="Form-search" onSubmit={handleSubmit}>
             <label htmlFor="queryType">Search By:</label>
             <select className="Form-select" id="queryType" onChange={handleChange} value={formState.queryType}>
+                <option value="">Choose from below</option> 
                 <option value="performer">Performer</option>
                 <option value="city">City</option>
+                required
             </select>
             <label htmlFor="searchString">Search:</label>
             <input 
