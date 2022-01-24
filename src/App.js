@@ -6,7 +6,38 @@ import SearchResults from './components/SearchResults';
 const App = () => {
   //Our event data will use hooks to update without page refreshes
   const [eventData, setEventData] = useState(null);
-  
+  const [performerData, setPerformerData] = useState(null);
+
+  const[isLoading, setIsLoading] = useState(false);
+
+  //write a function to be called back in the .finally after the first fetch call
+  const getPerformers = () => {
+    console.log("start of getPerformers");
+    console.log(eventData)
+    const myEvents = eventData.events;
+    let myURL = `https://api.seatgeek.com/2/performers?`;
+    let endURL = `client_id=${queryOptions.client_id}&client_secret=${queryOptions.client_secret}`;
+    myEvents.forEach((event) => {
+      console.log("in for each loop")
+      console.log(event.performers[0].id)
+      myURL = myURL.concat(`id=${event.performers[0].id}&`);
+    })
+    myURL = myURL.concat(endURL);
+    console.log(myURL);
+    fetch(myURL)
+    .then((response) => {
+      return response.json();
+    })
+    .then((response) => {
+      console.log("in fetch");
+      console.log(response);
+      setPerformerData(response);
+    })
+    .catch((err) => {
+      console.error(err);
+    })
+  }
+
   //Init Form state
   const initFormState = {
     queryType: "",
@@ -42,6 +73,7 @@ const App = () => {
 
   //Fetch the event info
   const getEventInfo = () => {
+    setIsLoading(true);
     switch(formState.queryType) {
       case "performer":
         console.log("in performer case");
@@ -53,6 +85,10 @@ const App = () => {
         .then(response => {
           console.log(response);
           setEventData(response);
+        })
+        .finally(() => {
+          setIsLoading(false);
+          // getPerformers();
         })
         .catch(err => {
           console.error(err);
@@ -68,18 +104,27 @@ const App = () => {
         .then(response => {
           setEventData(response);
         })
+        .finally(() => {
+          setIsLoading(false);
+          // getPerformers();
+        })
         .catch(err => {
           console.error(err);
         });
         break;
 
       default:
+        console.log("default case");
         fetch(`https://api.seatgeek.com/2/events?venue.city=Chicago&taxonomies.name=concert&client_id=${queryOptions.client_id}&client_secret=${queryOptions.client_secret}`)
         .then(response => {
           return response.json();
         })
         .then(response => {
           setEventData(response);
+        })
+        .finally(() => {
+          setIsLoading(false);
+          // getPerformers();
         })
         .catch(err => {
           console.error(err);
@@ -88,13 +133,19 @@ const App = () => {
   };
 
   useEffect(getEventInfo, []);
-
+  useEffect(() => {
+    if(eventData) {
+      getPerformers();
+    }
+    
+  }, [eventData]);
+  
   return (
     <div className="App">
       <header className="App-header">
         <SearchForm handleSubmit={handleSubmit} handleChange={handleChange} formState={formState}/>
       </header>
-      <SearchResults eventData={eventData} lastForm={lastForm} queryOptions={queryOptions}/>
+      <SearchResults eventData={eventData} lastForm={lastForm} queryOptions={queryOptions} performerData={performerData}/>
     </div>
   );
 }
