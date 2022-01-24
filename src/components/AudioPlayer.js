@@ -1,22 +1,25 @@
 import React from "react";
 import { useEffect } from "react/cjs/react.development";
 
-const AudioPlayer = ({performerData, mapIndex}) => {
+const AudioPlayer = ({performerData, eventPerformer}) => {
     let myURL = "";
-    console.log(performerData)
+    // console.log(performerData);
     // console.log(performerData.performers[mapIndex].links[0].url);
-    console.log(mapIndex);
+    // console.log(mapIndex);
     //updateURLS is a function that modifies the performers' url for the spotify embedded player
     const updateURLS = () => {
 
-        const url = performerData.performers[mapIndex].links[0].url;
-        const splitIndex = url.indexOf("artist");
-        console.log(splitIndex);
-        let firstHalf = url.substring(0, splitIndex);
-        let secondHalf = url.substring(splitIndex);
-        myURL = firstHalf.concat("embed/", secondHalf);
-        console.log(myURL);
-
+        performerData.performers.forEach((performer) => {
+            if(performer.name === eventPerformer) {
+                const url = performer.links[0].url;
+                const splitIndex = url.indexOf("artist");
+                // console.log(splitIndex);
+                let firstHalf = url.substring(0, splitIndex);
+                let secondHalf = url.substring(splitIndex);
+                myURL = firstHalf.concat("embed/", secondHalf);
+                // console.log(myURL);
+            }
+        })
     }
 
     // if (performerData){

@@ -3,7 +3,6 @@ import Map from "./Map";
 import AudioPlayer from "./AudioPlayer";
 
 const SearchResults = ({eventData, lastForm, queryOptions, performerData}) => {
-    let mapIndex = -1;
     if(eventData) {
         const myResults = eventData.events;
         if(myResults.length < 1) {
@@ -14,8 +13,7 @@ const SearchResults = ({eventData, lastForm, queryOptions, performerData}) => {
         return (
             <div className="Div-results">
                 {myResults.map((event) => {
-                    console.log(event);
-                    mapIndex++;
+                    // console.log(event);
                     const venueCity = event.venue.city;
                     const venueName = event.venue.name;
                     const venueDate = event.datetime_local.split("T", 1)
@@ -36,7 +34,7 @@ const SearchResults = ({eventData, lastForm, queryOptions, performerData}) => {
                                 <li className="Li-ticket" key={event.url}><a href={event.url} className="Li-a">Buy Tickets Here</a></li>
                             </ul>
                             <Map queryOptions={queryOptions} venueName={venueName} venueCity = {venueCity} />
-                            <AudioPlayer performerData={performerData} mapIndex={mapIndex}/>
+                            <AudioPlayer performerData={performerData} eventPerformer={event.performers[0].name}/>
                         </div>
                     )
                 })}

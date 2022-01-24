@@ -12,25 +12,26 @@ const App = () => {
 
   //write a function to be called back in the .finally after the first fetch call
   const getPerformers = () => {
-    console.log("start of getPerformers");
-    console.log(eventData)
+    // console.log("start of getPerformers");
+    // console.log(eventData)
     const myEvents = eventData.events;
     let myURL = `https://api.seatgeek.com/2/performers?`;
     let endURL = `client_id=${queryOptions.client_id}&client_secret=${queryOptions.client_secret}`;
     myEvents.forEach((event) => {
-      console.log("in for each loop")
-      console.log(event.performers[0].id)
+      // console.log("in for each loop")
+      // console.log(event.performers[0].id)
       myURL = myURL.concat(`id=${event.performers[0].id}&`);
+      // console.log(event.performers[0])
     })
     myURL = myURL.concat(endURL);
-    console.log(myURL);
+    // console.log(myURL);
     fetch(myURL)
     .then((response) => {
       return response.json();
     })
     .then((response) => {
-      console.log("in fetch");
-      console.log(response);
+      // console.log("in fetch");
+      // console.log(response);
       setPerformerData(response);
     })
     .catch((err) => {
@@ -79,11 +80,11 @@ const App = () => {
         console.log("in performer case");
         fetch(`https://api.seatgeek.com/2/events?performers.slug=${formState.searchString}&taxonomies.name=concert&client_id=${queryOptions.client_id}&client_secret=${queryOptions.client_secret}`)
         .then(response => {
-          console.log(response);
+          // console.log(response);
           return response.json();
         })
         .then(response => {
-          console.log(response);
+          // console.log(response);
           setEventData(response);
         })
         .finally(() => {
