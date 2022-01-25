@@ -8,6 +8,7 @@
     display:grid;
     align-content: space-between;
     justify-content: center;
+    /* background: white; */
 }
 
 .Img-results {
@@ -15,8 +16,16 @@
 }
 .H2-results {
     text-align: center;
+    background: rgba(63, 62, 62, 0.80);
+    color: white;
 }
 
 .Ul-info {
     justify-self: center;
+    background: rgba(63, 62, 62, 0.80);
+    color: white
+}
+
+.Li-a {
+    color: white;
 }
