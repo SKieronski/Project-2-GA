@@ -1,1 +1,10 @@
+.App {
+    display: grid;
+    grid-template-columns: repeat(1, max-width);
+    align-content: center;
+}
 
+.App-header {
+    grid-row: 1;
+    text-align: center;
+}

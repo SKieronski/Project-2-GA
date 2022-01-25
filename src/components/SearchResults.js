@@ -1,6 +1,7 @@
 import React from "react";
 import Map from "./Map";
 import AudioPlayer from "./AudioPlayer";
+import "./SearchResults.css";
 
 const SearchResults = ({eventData, lastForm, queryOptions, performerData}) => {
     //Once the event data and performer data is fetched...
@@ -22,7 +23,7 @@ const SearchResults = ({eventData, lastForm, queryOptions, performerData}) => {
                         <div className="inDIVidual-results" key={event.id}>
                             <img className="Img-results" src={event.performers[0].image} alt={event.performers[0].name}/>
                             <h2 className="H2-results">{event.title}</h2>
-                            <ul className="Ul-genre">
+                            <ul className="Ul-info">
                                 {event.performers[0].genres && 
                                 <li className="Li-genre" key={event.performers[0].genres[0].id}>{event.performers[0].genres[0].name}</li>}
 

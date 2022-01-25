@@ -1,4 +1,5 @@
 import React from "react";
+import "./AudioPlayer.css"
 
 const AudioPlayer = ({performerData, eventPerformerName}) => {
     let myURL = "";
@@ -7,7 +8,7 @@ const AudioPlayer = ({performerData, eventPerformerName}) => {
          performerData.performers.forEach((performer) => {
             if(performer.performers[0].name === eventPerformerName && performer.performers[0].links.length > 0) {
                 const url = performer.performers[0].links[0].url;
-                
+
                 const addAnSIndex = url.indexOf(":");
                 let httpString = url.substring(0, addAnSIndex);
                 let restOfString = url.substring(addAnSIndex);

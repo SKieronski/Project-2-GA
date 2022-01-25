@@ -1,0 +1,22 @@
+.Div-results{
+    display:grid;
+    grid-template-columns: repeat(3,1fr);
+    /* grid-template-rows: repeat(3, 500px); */
+}
+
+.inDIVidual-results {
+    display:grid;
+    align-content: space-between;
+    justify-content: center;
+}
+
+.Img-results {
+    justify-self: center;
+}
+.H2-results {
+    text-align: center;
+}
+
+.Ul-info {
+    justify-self: center;
+}

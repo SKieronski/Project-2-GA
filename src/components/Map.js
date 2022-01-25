@@ -1,4 +1,5 @@
 import React from "react";
+import "./Map.css"
 
 const Map = ({queryOptions, venueCity, venueName}) => {
     const mapsURL = `https://www.google.com/maps/embed/v1/place?key=${queryOptions.g_maps_key}&q=${venueName},${venueCity}`;
