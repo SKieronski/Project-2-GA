@@ -7,9 +7,15 @@ const AudioPlayer = ({performerData, eventPerformerName}) => {
          performerData.performers.forEach((performer) => {
             if(performer.performers[0].name === eventPerformerName && performer.performers[0].links.length > 0) {
                 const url = performer.performers[0].links[0].url;
-                const splitIndex = url.indexOf("artist");
-                let firstHalf = url.substring(0, splitIndex);
-                let secondHalf = url.substring(splitIndex);
+                
+                const addAnSIndex = url.indexOf(":");
+                let httpString = url.substring(0, addAnSIndex);
+                let restOfString = url.substring(addAnSIndex);
+                let newURL = httpString.concat("s", restOfString);
+
+                const splitIndex = newURL.indexOf("artist");
+                let firstHalf = newURL.substring(0, splitIndex);
+                let secondHalf = newURL.substring(splitIndex);
                 myURL = firstHalf.concat("embed/", secondHalf);
                 return;
             }
