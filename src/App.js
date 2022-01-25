@@ -4,61 +4,14 @@ import SearchForm from './components/SearchForm';
 import SearchResults from './components/SearchResults';
 
 const App = () => {
-  //Our event data will use hooks to update without page refreshes
+  //Event data that we will fetch on page load and form submit
   const [eventData, setEventData] = useState(null);
 
+  //Performer data that will be used to get the event performer's spotify url
   const initPerformerData = {
     performers : [],
   }
   const [performerData, setPerformerData] = useState(initPerformerData);
-
-  const[isLoading, setIsLoading] = useState(false);
-
-  //write a function to be called back in the .finally after the first fetch call
-  // const getPerformers = () => {
-  //   // console.log("start of getPerformers");
-  //   // console.log(eventData)
-  //   const myEvents = eventData.events;
-  //   // let myURL = `https://api.seatgeek.com/2/performers?`;
-  //   let endURL = `client_id=${queryOptions.client_id}&client_secret=${queryOptions.client_secret}`;
-  //   myEvents.forEach((event) => {
-  //     let myURL = `https://api.seatgeek.com/2/performers?`;
-  //     // console.log("in for each loop")
-  //     // console.log(event.performers[0].id)
-  //     myURL = myURL.concat(`id=${event.performers[0].id}&`);
-  //     // console.log(event.performers[0])
-  //     myURL = myURL.concat(endURL);
-  //     console.log(myURL);
-  //     fetch(myURL)
-  //     .then((response) => {
-  //       return response.json();
-  //     })
-  //     .then((response) => {
-  //       // console.log("in fetch");
-  //       // console.log(response);
-  //       setPerformerData((performerData) => {
-  //         return [...performerData.performers, response]
-  //       });
-  //     })
-  //     .catch((err) => {
-  //       console.error(err);
-  //     })
-  //   })
-  //   // myURL = myURL.concat(endURL);
-  //   // console.log(myURL);
-  //   // fetch(myURL)
-  //   // .then((response) => {
-  //   //   return response.json();
-  //   // })
-  //   // .then((response) => {
-  //   //   // console.log("in fetch");
-  //   //   // console.log(response);
-  //   //   setPerformerData(response);
-  //   // })
-  //   // .catch((err) => {
-  //   //   console.error(err);
-  //   // })
-  // }
 
   // Fetch the main performer of each event.
   const getPerformers = () => {
@@ -79,13 +32,13 @@ const App = () => {
     })
   }
 
-  //Init Form state
   const initFormState = {
     queryType: "",
     searchString: "",
   }
   
-  // Form state
+  //Form state that is changed on form change and form submit
+  //we use this to handle how we fetch data from the event API
   const [formState, setFormState] = useState(initFormState);
   const [lastForm, setLastForm] = useState(formState);
 
@@ -96,6 +49,7 @@ const App = () => {
     //call useEffect on our fetch function
     getEventInfo();
     setLastForm(formState);
+
     //Reset the form
     setFormState(initFormState);
   }
@@ -114,7 +68,6 @@ const App = () => {
 
   //Fetch the event info
   const getEventInfo = () => {
-    setIsLoading(true);
     switch(formState.queryType) {
       case "performer":
         console.log("in performer case");
@@ -126,10 +79,6 @@ const App = () => {
         .then(response => {
           // console.log(response);
           setEventData(response);
-        })
-        .finally(() => {
-          setIsLoading(false);
-          // getPerformers();
         })
         .catch(err => {
           console.error(err);
@@ -145,10 +94,6 @@ const App = () => {
         .then(response => {
           setEventData(response);
         })
-        .finally(() => {
-          setIsLoading(false);
-          // getPerformers();
-        })
         .catch(err => {
           console.error(err);
         });
@@ -163,17 +108,16 @@ const App = () => {
         .then(response => {
           setEventData(response);
         })
-        .finally(() => {
-          setIsLoading(false);
-          // getPerformers();
-        })
         .catch(err => {
           console.error(err);
         });
     } 
   };
 
+  //Use useEffect hooks to prevent infinite looping.
   useEffect(getEventInfo, []);
+
+  //getPerformers after event data is fetched
   useEffect(() => {
     if(eventData) {
       getPerformers();
