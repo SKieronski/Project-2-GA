@@ -6,36 +6,76 @@ import SearchResults from './components/SearchResults';
 const App = () => {
   //Our event data will use hooks to update without page refreshes
   const [eventData, setEventData] = useState(null);
-  const [performerData, setPerformerData] = useState(null);
+
+  const initPerformerData = {
+    performers : [],
+  }
+  const [performerData, setPerformerData] = useState(initPerformerData);
 
   const[isLoading, setIsLoading] = useState(false);
 
   //write a function to be called back in the .finally after the first fetch call
+  // const getPerformers = () => {
+  //   // console.log("start of getPerformers");
+  //   // console.log(eventData)
+  //   const myEvents = eventData.events;
+  //   // let myURL = `https://api.seatgeek.com/2/performers?`;
+  //   let endURL = `client_id=${queryOptions.client_id}&client_secret=${queryOptions.client_secret}`;
+  //   myEvents.forEach((event) => {
+  //     let myURL = `https://api.seatgeek.com/2/performers?`;
+  //     // console.log("in for each loop")
+  //     // console.log(event.performers[0].id)
+  //     myURL = myURL.concat(`id=${event.performers[0].id}&`);
+  //     // console.log(event.performers[0])
+  //     myURL = myURL.concat(endURL);
+  //     console.log(myURL);
+  //     fetch(myURL)
+  //     .then((response) => {
+  //       return response.json();
+  //     })
+  //     .then((response) => {
+  //       // console.log("in fetch");
+  //       // console.log(response);
+  //       setPerformerData((performerData) => {
+  //         return [...performerData.performers, response]
+  //       });
+  //     })
+  //     .catch((err) => {
+  //       console.error(err);
+  //     })
+  //   })
+  //   // myURL = myURL.concat(endURL);
+  //   // console.log(myURL);
+  //   // fetch(myURL)
+  //   // .then((response) => {
+  //   //   return response.json();
+  //   // })
+  //   // .then((response) => {
+  //   //   // console.log("in fetch");
+  //   //   // console.log(response);
+  //   //   setPerformerData(response);
+  //   // })
+  //   // .catch((err) => {
+  //   //   console.error(err);
+  //   // })
+  // }
+
+  // Fetch the main performer of each event.
   const getPerformers = () => {
-    // console.log("start of getPerformers");
-    // console.log(eventData)
-    const myEvents = eventData.events;
-    let myURL = `https://api.seatgeek.com/2/performers?`;
-    let endURL = `client_id=${queryOptions.client_id}&client_secret=${queryOptions.client_secret}`;
-    myEvents.forEach((event) => {
-      // console.log("in for each loop")
-      // console.log(event.performers[0].id)
-      myURL = myURL.concat(`id=${event.performers[0].id}&`);
-      // console.log(event.performers[0])
-    })
-    myURL = myURL.concat(endURL);
-    // console.log(myURL);
-    fetch(myURL)
-    .then((response) => {
+    const events = eventData.events;
+    events.forEach((event) => {
+      fetch(`https://api.seatgeek.com/2/performers?id=${event.performers[0].id}&client_id=${queryOptions.client_id}&client_secret=${queryOptions.client_secret}`)
+      .then(response => {
       return response.json();
-    })
-    .then((response) => {
-      // console.log("in fetch");
-      // console.log(response);
-      setPerformerData(response);
-    })
-    .catch((err) => {
+      })
+      .then(response => {
+        setPerformerData((performerData) => ({
+          performers: [...performerData.performers, response]
+        }));
+      })
+      .catch(err => {
       console.error(err);
+      });
     })
   }
 
