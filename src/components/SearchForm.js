@@ -1,4 +1,5 @@
 import React from "react";
+import "./SearchForm.css";
 
 const SearchForm = ({handleSubmit, handleChange, formState}) => {
 
@@ -11,7 +12,7 @@ const SearchForm = ({handleSubmit, handleChange, formState}) => {
                 <option value="city">City</option>
                 required
             </select>
-            <label htmlFor="searchString">Search:</label>
+            <label className="Form-search" htmlFor="searchString">Search:</label>
             <input 
                 type="search"
                 id="searchString"
@@ -19,7 +20,7 @@ const SearchForm = ({handleSubmit, handleChange, formState}) => {
                 value={formState.searchString}
                 required
             />
-            <button type="submit">Submit</button>
+            <button className="Form-button" type="submit">Submit</button>
         </form>
     )
 }

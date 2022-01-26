@@ -1,0 +1,11 @@
+.Form-search {
+    padding-left: 10px;
+}
+
+.Form-button {
+    background: none;
+    color: white;
+    border-color: white;
+    margin-left: 5px;
+    font-size: medium;
+}

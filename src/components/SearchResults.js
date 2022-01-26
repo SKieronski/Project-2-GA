@@ -10,7 +10,7 @@ const SearchResults = ({eventData, lastForm, queryOptions, performerData}) => {
         //Condtional for checking if the data is populated with events
         if(myResults.length < 1) {
             return (
-                <h1>No upcoming events for "{lastForm.searchString}"</h1>
+                <h1 className="No-results">No upcoming events for "{lastForm.searchString}"</h1>
             )
         }
         return (
@@ -44,7 +44,7 @@ const SearchResults = ({eventData, lastForm, queryOptions, performerData}) => {
         )
     } else {
         return (
-            <h1>Loading...</h1>
+            <h1 className="No-results">Loading...</h1>
         )
     }   
 }

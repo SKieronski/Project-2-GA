@@ -1,14 +1,20 @@
 .Div-results{
     display:grid;
     grid-template-columns: repeat(3,1fr);
-    /* grid-template-rows: repeat(3, 500px); */
+    gap: 20px;
 }
 
 .inDIVidual-results {
     display:grid;
     align-content: space-between;
     justify-content: center;
-    /* background: white; */
+    border: 2px solid rgb(124, 222, 199);
+}
+
+.No-results{
+    text-align: center;
+    background: rgba(63, 62, 62, 0.90);
+    color: white;
 }
 
 .Img-results {
@@ -16,16 +22,35 @@
 }
 .H2-results {
     text-align: center;
-    background: rgba(63, 62, 62, 0.80);
+    background: rgba(63, 62, 62, 0.90);
     color: white;
 }
 
 .Ul-info {
     justify-self: center;
-    background: rgba(63, 62, 62, 0.80);
-    color: white
+    background: rgba(63, 62, 62, 0.90);
+    color: white;
+    font-size: larger;
 }
 
 .Li-a {
     color: white;
+}
+
+
+
+@media screen and (max-width: 1000px){
+    .Div-results{
+        display:grid;
+        grid-template-columns: 1fr;
+        row-gap: 20px;
+    }
+}
+
+@media screen and (min-width: 1500px) {
+    .Div-results{
+        display:grid;
+        grid-template-columns: repeat(4,1fr);
+        row-gap: 20px;
+    }
 }
